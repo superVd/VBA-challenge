@@ -1,0 +1,77 @@
+Sub StockData()
+
+   
+
+        'Call Variables and Arguments
+        Dim x As Long
+        Dim y As Long
+        Dim TickRow As Long
+        Dim LastRowA As Long
+        Dim LastRowB As Long
+        Dim Percent_Change As Double
+        Dim Greatest_Increase As Double
+        Dim Greatest_Decrease As Double
+        Dim Volume As Double
+       
+       'Create Excel Column Headers
+        Cells(1, 9).Value = "Ticker"
+        Cells(1, 10).Value = "Year Difference"
+        Cells(1, 11).Value = "Percent Difference"
+        Cells(1, 12).Value = "Total Volume"
+        Cells(1, 16).Value = "Ticker"
+        Cells(1, 17).Value = "Value"
+        Cells(2, 15).Value = "Greatest % Increase"
+        Cells(3, 15).Value = "Greatest % Decrease"
+        Cells(4, 15).Value = "Greatest Total Volume"
+        
+        'Ticker Row
+        TickerCount = 2
+        
+        'start row
+        y = 2
+        
+        'Locate last non-blank cell in column A
+        LastRowA = Cells(Rows.Count, 1).End(xlUp).Row
+        
+            For x = 2 To LastRowA
+                If Cells(x + 1, 1).Value <> Cells(x, 1).Value Then
+                   Cells(TickerCount, 9).Value = Cells(x, 1).Value
+                   Cells(TickerCount, 10).Value = Cells(x, 6).Value - Cells(y, 3).Value
+                
+                    'change cell to red
+                If Cells(TickerCount, 10).Value < 0 Then
+                    
+                    Cells(TickerCount, 10).Interior.ColorIndex = 3
+                
+                    'change cell to green
+                Else
+                
+                    Cells(Tickerount, 10).Interior.ColorIndex = 4
+                
+                End If
+                    
+                    'Calculate and write percent
+                    If Cells(y, 3).Value <> 0 Then
+                    
+                       PerChange = ((Cells(x, 6).Value - Cells(y, 3).Value) / Cells(y, 3).Value)
+                       Cells(TickCounter, 11).Value = Format(PerChange, "Percent")
+                    
+                    Else
+                    
+                       Cells(TickCounter, 11).Value = Format(0, "Percent")
+                    
+                    End If
+                    
+                'Calculate column L
+                Cells(TickCounter, 12).Value = WorksheetFunction.Sum(Range(Cells(j, 7), Cells(i, 7)))
+                
+                'Increase TickerCount by one
+                TickCounter = TickCounter + 1
+                
+                'new start row for the ticker block
+                y = x + 1
+                
+                End If
+            
+            Next x
+End Sub
